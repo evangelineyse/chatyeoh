@@ -156,11 +156,12 @@ def run_dummy_server():
 
 
 if __name__ == "__main__":
-    # Start Telegram bot in background thread
-    threading.Thread(target=app.run_polling, daemon=True).start()
+    # Start HTTP server in background
+    threading.Thread(target=run_dummy_server, daemon=True).start()
 
-    # Run HTTP server in main thread (Render health check depends on this)
-    run_dummy_server()
+    # Run Telegram polling in main thread
+    app.run_polling()
+
 
 
 

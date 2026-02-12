@@ -155,12 +155,20 @@ def run_dummy_server():
     server.serve_forever()
 
 
+import asyncio
+
 if __name__ == "__main__":
-    # Start HTTP server in background
+    # Start HTTP server in background (for Render health check)
     threading.Thread(target=run_dummy_server, daemon=True).start()
 
-    # Run Telegram polling in main thread
-    app.run_polling()
+    async def main():
+        await app.initialize()
+        await app.start()
+        await app.updater.start_polling()
+        await app.updater.idle()
+
+    asyncio.run(main())
+
 
 
 

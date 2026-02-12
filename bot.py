@@ -48,7 +48,7 @@ BYE_STICKER = "CAACAgIAAxkBAANBaYwxY0vAzA22DjKqd6841BdITxwAAnYNAAJ_H4lK4zCiT0tLm
 BYE_VOICE = "AwACAgUAAxkBAANlaYw1ZacVXybuNH4ET__RKgFew0cAAv0aAALbN2FURfjIFlU5__c6BA"
 
 #Wingwing voice
-WINGWING_VOICE = "AwACAgUAAxkBAAMCaY2ZISTRbg8jV9Zcpk8PE6eIGcAAAuYZAAKPl3BUUtMZoPw-d6Q6BA"
+WINGWING_VOICE = "AwACAgUAAxkBAAPQaY2gPjiGIjZBx7rWohoNpGb-bvkAAuYZAAKPl3BUrtZSY5FFGtk6BA"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Happy Valentine's Day mi love!!! Chat Yeoh is here 😌💖\n\n"
@@ -95,7 +95,10 @@ async def bhm(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     
 async def wingwing(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("wingwing triggered")
+    await context.bot.send_voice(
+        chat_id=update.message.chat_id,
+        voice=WINGWING_VOICE
+    )
 
 
 async def bye(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -131,13 +134,10 @@ async def send_reply(update: Update, context: ContextTypes.DEFAULT_TYPE, text: s
         chat_id=update.message.chat_id,
         sticker=random.choice(STICKERS)
     )
-async def grab_voice_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if update.message and update.message.voice:
-        await update.message.reply_text(update.message.voice.file_id)
+
 
 
 app = ApplicationBuilder().token(TOKEN).build()
-app.add_handler(MessageHandler(filters.VOICE, grab_voice_id))
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi_bao", hi_bao))

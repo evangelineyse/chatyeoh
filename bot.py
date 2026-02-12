@@ -139,7 +139,6 @@ print("Chat Yeoh ultimate multimedia mode activated 💖🎥🎙️")
 
 import threading
 from http.server import BaseHTTPRequestHandler, HTTPServer
-import asyncio
 import os
 
 
@@ -157,14 +156,12 @@ def run_dummy_server():
 
 
 if __name__ == "__main__":
-    # Start dummy server once
-    threading.Thread(target=run_dummy_server, daemon=True).start()
+    # Start Telegram bot in background thread
+    threading.Thread(target=app.run_polling, daemon=True).start()
 
-    # Fix Python 3.14 event loop issue
-    loop = asyncio.new_event_loop()
-    asyncio.set_event_loop(loop)
+    # Run HTTP server in main thread (Render health check depends on this)
+    run_dummy_server()
 
-    app.run_polling()
 
 
 

@@ -45,6 +45,8 @@ IMIU_VIDEOS = [
 BYE_STICKER = "CAACAgIAAxkBAANBaYwxY0vAzA22DjKqd6841BdITxwAAnYNAAJ_H4lK4zCiT0tLmaM6BA"
 BYE_VOICE = "AwACAgUAAxkBAANlaYw1ZacVXybuNH4ET__RKgFew0cAAv0aAALbN2FURfjIFlU5__c6BA"
 
+#Wingwing voice
+WINGWING_VOICE = "AwACAgUAAxkBAAMCaY2ZISTRbg8jV9Zcpk8PE6eIGcAAAuYZAAKPl3BUUtMZoPw-d6Q6BA"
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text("Happy Valentine's Day mi love!!! Chat Yeoh is here 😌💖\n\n"
@@ -88,6 +90,12 @@ async def i_love_u(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def bhm(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await send_reply(update, context,
         "no BHM!!! but i love you!!! CONFIRMED."
+    )
+    
+async def wingwing(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await context.bot.send_voice(
+        chat_id=update.message.chat_id,
+        voice=WINGWING_VOICE
     )
 
 
@@ -133,6 +141,7 @@ app.add_handler(CommandHandler("hi_bao", hi_bao))
 app.add_handler(CommandHandler("i_mi_u", i_mi_u))
 app.add_handler(CommandHandler("i_love_u", i_love_u))
 app.add_handler(CommandHandler("bhm", bhm))
+app.add_handler(CommandHandler("wingwing", wingwing))
 app.add_handler(CommandHandler("bye", bye))
 
 print("Chat Yeoh ultimate multimedia mode activated 💖🎥🎙️")

@@ -7,7 +7,8 @@ from telegram.ext import (
     ContextTypes,
 )
 
-TOKEN = "8423693012:AAH3X3aTinqxD-B-pwTFWeO6oEW88nArIQ4"
+import os
+TOKEN = os.environ.get("TOKEN")
 
 # 💖 FULL Sticker Collection (All 17)
 STICKERS = [
@@ -135,4 +136,35 @@ app.add_handler(CommandHandler("bhm", bhm))
 app.add_handler(CommandHandler("bye", bye))
 
 print("Chat Yeoh ultimate multimedia mode activated 💖🎥🎙️")
-app.run_polling()
+
+import threading
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import asyncio
+import os
+
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running")
+
+
+def run_dummy_server():
+    port = int(os.environ.get("PORT", 10000))
+    server = HTTPServer(("0.0.0.0", port), Handler)
+    server.serve_forever()
+
+
+if __name__ == "__main__":
+    # Start dummy server once
+    threading.Thread(target=run_dummy_server, daemon=True).start()
+
+    # Fix Python 3.14 event loop issue
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+
+    app.run_polling()
+
+
+

@@ -5,6 +5,8 @@ from telegram.ext import (
     ApplicationBuilder,
     CommandHandler,
     ContextTypes,
+    MessageHandler,
+    filters,
 )
 
 import os
@@ -129,9 +131,13 @@ async def send_reply(update: Update, context: ContextTypes.DEFAULT_TYPE, text: s
         chat_id=update.message.chat_id,
         sticker=random.choice(STICKERS)
     )
+async def grab_voice_id(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message and update.message.voice:
+        await update.message.reply_text(update.message.voice.file_id)
 
 
 app = ApplicationBuilder().token(TOKEN).build()
+app.add_handler(MessageHandler(filters.VOICE, grab_voice_id))
 
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CommandHandler("hi_bao", hi_bao))

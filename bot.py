@@ -93,10 +93,7 @@ async def bhm(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
     
 async def wingwing(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await context.bot.send_voice(
-        chat_id=update.message.chat_id,
-        voice=WINGWING_VOICE
-    )
+    await update.message.reply_text("wingwing triggered")
 
 
 async def bye(update: Update, context: ContextTypes.DEFAULT_TYPE):

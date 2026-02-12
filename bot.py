@@ -155,18 +155,9 @@ def run_dummy_server():
     server.serve_forever()
 
 
-import asyncio
-
 if __name__ == "__main__":
-    # Start HTTP server in background (Render health check)
     threading.Thread(target=run_dummy_server, daemon=True).start()
-
-    async def main():
-        await app.initialize()
-        await app.start()
-        await app.run_polling()
-
-    asyncio.run(main())
+    app.run_polling()
 
 
 
